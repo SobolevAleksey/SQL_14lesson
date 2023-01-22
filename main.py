@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, request, jsonify
 import utils
 
+# Создаем блюпринт
 main_blueprint = Blueprint('main_blueprint', __name__)
 
 
