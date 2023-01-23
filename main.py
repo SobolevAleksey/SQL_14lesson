@@ -8,7 +8,7 @@ main_blueprint = Blueprint('main_blueprint', __name__)
 @main_blueprint.route("/movie/<title>")
 def get_by_title(title):
     query = f"""
-    SELECT * FROM 'netflix' WHERE `title` = {title} ORDER BY `date_added` DESC
+    SELECT * FROM 'netflix' WHERE `title` = '{title}' ORDER BY `date_added` DESC
     """
     query_result = utils.get_one(query)
     if query_result is None:
@@ -31,7 +31,7 @@ def get_movie_by_year(year1, year2):
     SELECT * FROM netflix WHERE release_year BETWEEN {year1} and {year2} LIMIT 100
     """
     result = []
-    for movie in get_all(query):
+    for movie in utlis.get_all(query):
         result.append(
             {'title': movie['title'],
             'release_year': movie['release_year']
@@ -55,7 +55,7 @@ def get_movie_by_rating(value):
         return jsonify(status=400)
     
     result = []
-    for movie in get_all(query):
+    for movie in utils.get_all(query):
         result.append(
             {'title': movie['title'],
              'rating': movie['rating'],
@@ -70,7 +70,7 @@ def get_movie_by_genre(genre):
     SELECT * FROM netflix WHERE listed_in LIKE '%{genre}%' ORDER BY date_added DESC LIMIT 10
     """
     result = []
-    for movie in get_all(query):
+    for movie in utils.get_all(query):
         result.append(
             {'title': movie['title'],
              'description': movie['description']
